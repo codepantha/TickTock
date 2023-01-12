@@ -15,6 +15,18 @@
       rounded-md mt-3 outline-none hover:text-white
       hover:bg-[#f51997]
   }
+
+  .topicStyle {
+    @apply xl:border-2 hover:bg-primary xl:border-gray-300 px-3
+      py-2 rounded xl:rounded-full flex items-center gap-2
+      justify-center cursor-pointer text-black
+  }
+
+  .activeTopicStyle {
+    @apply xl:border-2 hover:bg-primary xl:border-[#f51997] px-3
+      py-2 rounded xl:rounded-full flex items-center gap-2
+      justify-center cursor-pointer text-[#ff1997]
+  }
 }
 
 html,
