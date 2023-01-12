@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .normalLink {
+    @apply flex items-center gap-3 hover:bg-primary p-3
+      justify-center xl:justify-start cursor-pointer
+      font-semibold text-[#f51997] rounded;
+  }
+
+  .loginButton {
+    @apply bg-white text-lg text-[#f51997] border-[1px]
+    border-[#f51997] w-full px-6 py-3 cursor-pointer font-semibold
+      rounded-md mt-3 outline-none hover:text-white
+      hover:bg-[#f51997]
+  }
+}
+
 html,
 body {
   padding: 0;
