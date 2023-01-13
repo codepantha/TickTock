@@ -27,6 +27,10 @@
       py-2 rounded xl:rounded-full flex items-center gap-2
       justify-center cursor-pointer text-[#ff1997]
   }
+
+  .buttonControls {
+    @apply text-black text-2xl lg:text-4xl bg-white rounded-2xl;
+  }
 }
 
 html,

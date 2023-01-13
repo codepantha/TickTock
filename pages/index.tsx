@@ -10,7 +10,7 @@ const Home = ({ videos }: IProps) => {
   console.log(videos);
   return <div className="flex flex-col gap-10 videos h-full">
     {videos.length ? (
-      videos.map((video: Video) => (
+      videos.map((video) => (
         <VideoCard post={video} key={video._id} />
       ))
     ) : (
