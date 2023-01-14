@@ -1,14 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { GoogleLogin, googleLogout } from '@react-oauth/google'
+import { GoogleLogin, googleLogout } from '@react-oauth/google';
+import { IoMdAdd } from 'react-icons/io';
 
 import Logo from '../utils/ticktock-logo.png';
 import { createOrGetUser } from '../utils';
 import useAuthStore from '../store/authStore';
+import { AiOutlineLogout } from 'react-icons/ai';
 
 const Navbar = () => {
-  const { userProfile, addUser } = useAuthStore();
+  const { userProfile, addUser, removeUser } = useAuthStore();
+
+  const logOut = (): void => {
+    googleLogout();
+    removeUser();
+  };
 
   return (
     <nav
@@ -30,7 +37,34 @@ const Navbar = () => {
 
       <div>
         {userProfile ? (
-          <div>{userProfile.userName}</div>
+          <div className="flex gap-5 md:gap-10">
+            <Link href="/upload">
+              <button
+                className="border-2 px-2 md:px-4 text-md font-semibold
+                  flex items-center"
+              >
+                <IoMdAdd className="text-xl" /> {` `}
+                <span className="hidden md:block">Upload</span>
+              </button>
+            </Link>
+
+            {userProfile.image && (
+              <Link href="/">
+                <>
+                  <Image
+                    src={userProfile.image}
+                    alt="Profile pic"
+                    width={40}
+                    height={40}
+                  />
+                </>
+              </Link>
+            )}
+
+            <button className="px-2" type="button" onClick={logOut}>
+              <AiOutlineLogout />
+            </button>
+          </div>
         ) : (
           <GoogleLogin
             onSuccess={(response) => createOrGetUser(response, addUser)}
