@@ -1,10 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { GoogleLogin, googleLogout } from '@react-oauth/google'
 
 import Logo from '../utils/ticktock-logo.png';
+import { createOrGetUser } from '../utils';
 
 const Navbar = () => {
+  const user = false;
+
   return (
     <nav
       className="w-full flex justify-between items-center
@@ -20,6 +24,19 @@ const Navbar = () => {
           />
         </div>
       </Link>
+
+      <div>SEARCH</div>
+
+      <div>
+        {user ? (
+          <div>LOGGED IN</div>
+        ) : (
+          <GoogleLogin
+            onSuccess={(response) => createOrGetUser(response)}
+            onError={() => console.log('Error')}
+          />
+        )}
+      </div>
     </nav>
   );
 };
