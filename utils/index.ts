@@ -7,7 +7,7 @@ type User = {
   picture: string;
 }
 
-export const createOrGetUser = async (response: any) => {
+export const createOrGetUser = async (response: any, addUser: any) => {
   const decoded: User = jwt_decode(response.credential);
   const { name, picture, sub } = decoded;
 
@@ -18,5 +18,7 @@ export const createOrGetUser = async (response: any) => {
     image: picture,
   }
 
-  await axios.post('http://localhost:3000/api/auth', user);
+  const res = await axios.post('http://localhost:3000/api/auth', user);
+
+  if (res.status === 200) addUser(user);
 };

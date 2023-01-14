@@ -5,9 +5,10 @@ import { GoogleLogin, googleLogout } from '@react-oauth/google'
 
 import Logo from '../utils/ticktock-logo.png';
 import { createOrGetUser } from '../utils';
+import useAuthStore from '../store/authStore';
 
 const Navbar = () => {
-  const user = false;
+  const { userProfile, addUser } = useAuthStore();
 
   return (
     <nav
@@ -28,11 +29,11 @@ const Navbar = () => {
       <div>SEARCH</div>
 
       <div>
-        {user ? (
-          <div>LOGGED IN</div>
+        {userProfile ? (
+          <div>{userProfile.userName}</div>
         ) : (
           <GoogleLogin
-            onSuccess={(response) => createOrGetUser(response)}
+            onSuccess={(response) => createOrGetUser(response, addUser)}
             onError={() => console.log('Error')}
           />
         )}
