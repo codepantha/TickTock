@@ -95,7 +95,7 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
             <video
               ref={videoRef}
               loop
-              className="w-[200px] h-[300px] md:h-[400] lg:w-[600px]
+              className="w-[200px] h-[300px] md:h-[400] lg:w-[700px]
                 lg:h-[530px] rounded-2xl cursor-pointer bg-gray-100"
               src={post.video.asset.url}
             />
@@ -103,7 +103,7 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
 
           {isHovering && (
             <div className="absolute bottom-6 cursor-pointer
-              flex gap-10 justify-center w-[200px] lg:w-[600px]
+              flex gap-10 justify-center w-[200px] lg:w-[700px]
               opacity-40 shadow-lg p-3"
             >
               {isPlaying ? (
