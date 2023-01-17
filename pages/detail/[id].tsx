@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, FormEvent } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,6 +23,8 @@ const Detail = ({ postDetails }: IProps) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [comment, setComment] = useState('');
+  const [isPostingComment, setIsPostingComment] = useState(false);
 
   const router = useRouter();
   const { userProfile }: any = useAuthStore();
@@ -61,7 +63,22 @@ const Detail = ({ postDetails }: IProps) => {
         like
       });
 
-      setPost({ ...post, likes: data.likes })
+      setPost({ ...post, likes: data.likes });
+    }
+  };
+
+  const addComment = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (userProfile && comment) {
+      setIsPostingComment(true);
+      const { data } = await axios.put(`${BASE_URL}/api/posts/${post._id}`, {
+        userId: userProfile._id,
+        comment
+      });
+      setPost({ ...post, comments: data.comments })
+      setComment('');
+      setIsPostingComment(false);
     }
   };
 
@@ -185,7 +202,13 @@ const Detail = ({ postDetails }: IProps) => {
               />
             )}
           </div>
-          <Comments />
+          <Comments
+            comment={comment}
+            setComment={setComment}
+            addComment={addComment}
+            comments={post.comments}
+            isPostingComment={isPostingComment}
+          />
         </div>
       </div>
     </div>
