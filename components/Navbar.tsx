@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import { GoogleLogin, googleLogout } from '@react-oauth/google';
 import { IoMdAdd } from 'react-icons/io';
 
@@ -8,14 +8,26 @@ import Logo from '../utils/ticktock-logo.png';
 import { createOrGetUser } from '../utils';
 import useAuthStore from '../store/authStore';
 import { AiOutlineLogout } from 'react-icons/ai';
+import { BiSearch } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
   const { userProfile, addUser, removeUser } = useAuthStore();
+  const [searchValue, setSearchValue] = useState('');
+  const router = useRouter();
 
   const logOut = (): void => {
     googleLogout();
     removeUser();
   };
+
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (searchValue) {
+      router.push(`/search/${searchValue}`)
+    }
+  }
 
   return (
     <nav
@@ -33,7 +45,29 @@ const Navbar = () => {
         </div>
       </Link>
 
-      <div>SEARCH</div>
+      <div className="relative hidden md:block">
+        <form
+          onSubmit={handleSearch}
+          className="absolute md:static top-10 left-20 bg-white"
+        >
+          <input 
+            type="text" 
+            value={searchValue}
+            onChange={(e) => {setSearchValue(e.target.value)}}
+            placeholder="Search accounts and videos"
+            className="bg-primary p-3 md:text-md font-medium border-2
+            border-gray-100 focus:outline-none focus:border-2 rounded-full
+            focus:border-gray-300 w-[300px] md:w-[350px] md:top-0" 
+          />
+          <button
+            type="submit"
+            className="absolute md:right-5 right-6 top-4 border-l-2
+            border-gray-300 pl-4 text-2xl text-gray-400"
+          >
+            <BiSearch />
+          </button>
+        </form>
+      </div>
 
       <div>
         {userProfile ? (
