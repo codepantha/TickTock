@@ -1,4 +1,8 @@
+import { link } from 'fs';
+import Image from 'next/image';
+import Link from 'next/link';
 import React, { Dispatch, SetStateAction, FormEvent } from 'react';
+import { GoVerified } from 'react-icons/go';
 import useAuthStore from '../store/authStore';
 import NoResults from './NoResults';
 
@@ -6,7 +10,7 @@ interface IProps {
   comments: {
     comment: string;
     _key: string;
-    postedBy: { _ref: string };
+    postedBy: { _ref: string; _id: string };
   }[];
   comment: string;
   setComment: Dispatch<SetStateAction<string>>;
@@ -21,7 +25,7 @@ const Comments = ({
   setComment,
   isPostingComment
 }: IProps) => {
-  const { userProfile } = useAuthStore();
+  const { userProfile, allUsers } = useAuthStore();
 
   return (
     <div
@@ -30,7 +34,49 @@ const Comments = ({
     >
       <div className="overflow-scroll lg:h-[475px]">
         {comments?.length ? (
-          <div>Video comments</div>
+          comments.map((comment, idx) => (
+            <>
+              {allUsers.map(
+                (user: IUser) =>
+                  user._id ===
+                    (comment.postedBy._id || comment.postedBy._ref) && (
+                    <div className="p-2 items-center" key={idx}>
+                      <Link href={`/profile/${user._id}`}>
+                        <div className="flex items-start gap-3 cursor-pointer">
+                          <div className="w-8 h-8">
+                            <Image
+                              src={user.image}
+                              width={34}
+                              height={34}
+                              className="rounded-full"
+                              alt="user profile"
+                              layout="responsive"
+                            />
+                          </div>
+
+                          <div className="hidden xl:block">
+                            <p
+                              className="flex gap-1 items-center text md font-bold
+                            text-primary lowercase"
+                            >
+                              {user.userName.replaceAll(' ', '')}
+                              <GoVerified className="text-blue-400" />
+                            </p>
+                            <p className="capitalize text-gray-400 text-xs">
+                              {user.userName}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                      
+                      <div>
+                        <p>{comment.comment}</p>
+                      </div>
+                    </div>
+                  )
+              )}
+            </>
+          ))
         ) : (
           <NoResults text="No comments yet!" />
         )}
@@ -49,10 +95,7 @@ const Comments = ({
                 border-gray-100 focus:outline-none focus:border-2
                 focus:border-gray-300 flex-1 rounded-lg"
             />
-            <button
-              type="submit"
-              className="text-md text-gray-400"
-            >
+            <button type="submit" className="text-md text-gray-400">
               {isPostingComment ? 'Commenting...' : 'Comment'}
             </button>
           </form>
