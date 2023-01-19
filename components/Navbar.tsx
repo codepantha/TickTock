@@ -75,7 +75,7 @@ const Navbar = () => {
             <Link href="/upload">
               <button
                 className="border-2 px-2 md:px-4 text-md font-semibold
-                  flex items-center"
+                  flex items-center rounded-full"
               >
                 <IoMdAdd className="text-xl" /> {` `}
                 <span className="hidden md:block">Upload</span>
@@ -90,12 +90,13 @@ const Navbar = () => {
                     alt="Profile pic"
                     width={40}
                     height={40}
+                    className="rounded-full"
                   />
                 </>
               </Link>
             )}
 
-            <button className="px-2" type="button" onClick={logOut}>
+            <button className="p-2 rounded-full border-2" type="button" onClick={logOut}>
               <AiOutlineLogout />
             </button>
           </div>
