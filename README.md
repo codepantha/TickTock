@@ -29,6 +29,14 @@
 # <h1 id="about-project">📖 TIKTOK CLONE</h1>
 
 > This is a tick-tock clone built using Next.js, TypeScript and Sanity.io. Users can sign in, post videos in whatever category, like, and comment on videos. Users can also search for videos or users, and videos are based on categories.
+<table>
+  <th>Homepage Desktop View</th>
+  <th>Homepage Mobile View</th>
+  <tr>
+    <td><img src="./public/homepage-desktop.png"  alt="1" width = 650px height = 280px ></td>
+    <td><img src="./public/homepage-mobile.png" alt="3" width = 375px height = 576px ></td>
+   </tr> 
+</table>
 
 ## 🛠 Built With <a id="built-with"></a>
 
